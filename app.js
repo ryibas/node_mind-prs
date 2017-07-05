@@ -17,9 +17,7 @@ var coeffs = t.ARMaxEntropy({
 var forecast	= 0;	// Init the value at 0.
 for (var i=0;i<coeffs.length;i++) {	// Loop through the coefficients
     forecast -= t.data[10-i][1]*coeffs[i];
-    // Explanation for that line:
-    // t.data contains the current dataset, which is in the format [ [date, value], [date,value], ... ]
-    // For each coefficient, we substract from "forecast" the value of the "N - x" datapoint's value, multiplicated by the coefficient, where N is the last known datapoint value, and x is the coefficient's index.
 }
+
 console.log("forecast",forecast);
 // Output: 92.7237232432106
