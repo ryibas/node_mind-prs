@@ -20,4 +20,3 @@ for (var i=0;i<coeffs.length;i++) {	// Loop through the coefficients
 }
 
 console.log("forecast",forecast);
-// Output: 92.7237232432106
