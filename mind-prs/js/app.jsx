@@ -28,15 +28,19 @@ var app = app || {};
 		componentDidMount: function () {
 			var setState = this.setState;
 			var router = Router({
-				'/': setState.bind(this, {nowShowing: app.ALL_TODOS}),
-				'/active': setState.bind(this, {nowShowing: app.ACTIVE_TODOS}),
-				'/completed': setState.bind(this, {nowShowing: app.COMPLETED_TODOS})
+				'/': setState.bind(this, { nowShowing: app.ALL_TODOS }),
+				'/active': setState.bind(this, { nowShowing: app.ACTIVE_TODOS }),
+				'/completed': setState.bind(this, { nowShowing: app.COMPLETED_TODOS })
 			});
 			router.init('/');
 		},
 
 		handleChange: function (event) {
-			this.setState({newTodo: event.target.value});
+			this.setState({ newTodo: event.target.value });
+		},
+
+		onPressRock: function (event) {
+			alert('wtf');
 		},
 
 		handleNewTodoKeyDown: function (event) {
@@ -50,7 +54,7 @@ var app = app || {};
 
 			if (val) {
 				this.props.model.addTodo(val);
-				this.setState({newTodo: ''});
+				this.setState({ newTodo: '' });
 			}
 		},
 
@@ -68,16 +72,16 @@ var app = app || {};
 		},
 
 		edit: function (todo) {
-			this.setState({editing: todo.id});
+			this.setState({ editing: todo.id });
 		},
 
 		save: function (todoToSave, text) {
 			this.props.model.save(todoToSave, text);
-			this.setState({editing: null});
+			this.setState({ editing: null });
 		},
 
 		cancel: function () {
-			this.setState({editing: null});
+			this.setState({ editing: null });
 		},
 
 		clearCompleted: function () {
@@ -91,12 +95,12 @@ var app = app || {};
 
 			var shownTodos = todos.filter(function (todo) {
 				switch (this.state.nowShowing) {
-				case app.ACTIVE_TODOS:
-					return !todo.completed;
-				case app.COMPLETED_TODOS:
-					return todo.completed;
-				default:
-					return true;
+					case app.ACTIVE_TODOS:
+						return !todo.completed;
+					case app.COMPLETED_TODOS:
+						return todo.completed;
+					default:
+						return true;
 				}
 			}, this);
 
@@ -150,7 +154,7 @@ var app = app || {};
 			return (
 				<div>
 					<header className="header">
-						<h1>Rock-Paper-Scissors</h1>
+						<h1>RPS</h1>
 						<input
 							className="new-todo"
 							placeholder="What needs to be done?"
@@ -159,6 +163,24 @@ var app = app || {};
 							onChange={this.handleChange}
 							autoFocus={true}
 						/>
+						<Button
+							onPress={this.onPressRock}
+							title="Rock"
+							color="#841584"
+							accessibilityLabel="Rock"
+						/>
+						{/*<Button
+							onPress={this.onPressPaper}
+							title="Paper"
+							color="#841584"
+							accessibilityLabel="Paper"
+						/>
+						<Button
+							onPress={this.onPressScissors}
+							title="Scissors"
+							color="#841584"
+							accessibilityLabel="Scissors"
+						/>*/}
 					</header>
 					{main}
 					{footer}
@@ -171,7 +193,7 @@ var app = app || {};
 
 	function render() {
 		React.render(
-			<TodoApp model={model}/>,
+			<TodoApp model={model} />,
 			document.getElementsByClassName('todoapp')[0]
 		);
 	}
