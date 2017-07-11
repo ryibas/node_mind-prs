@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import './css/bootstrap-3.3.7-dist/css/bootstrap.min.css';
+import './css/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css';
 import Home from './components/rps/rps.jsx';
 import About from './components/about/aboutPage.jsx';
 
