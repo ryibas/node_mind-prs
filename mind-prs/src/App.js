@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Home from './rps/rps.jsx';
-import About from './about/aboutPage.jsx';
+import Home from './components/rps/rps.jsx';
+import About from './components/about/aboutPage.jsx';
 
 class App extends Component {
   render() {
