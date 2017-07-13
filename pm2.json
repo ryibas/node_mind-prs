@@ -1,0 +1,16 @@
+{
+    "apps": [
+        // {
+        //     "name": "mind-prs",
+        //     "cwd": "./mind-prs",
+        //     "script": "npm",
+        //     "args": "start"
+        // },
+        {
+            "name": "pi-controller",
+            "cwd": "./pi-controller",
+            "script": "index.js",
+            "args": "start"
+        }
+    ]
+}
