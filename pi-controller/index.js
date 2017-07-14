@@ -8,9 +8,9 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    console.log('message received - ' + msg);
-    io.emit('chat message', msg);
+  socket.on('rps_play', function(play){
+    console.log('message received - ' + play);
+    io.emit('rps_play', play);
   });
 });
 

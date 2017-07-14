@@ -10,11 +10,14 @@ import io from 'socket.io-client';
 class App extends Component {
   constructor(props) {
     super(props);
+
     var socket = io('http://localhost:3001');
-    socket.on('chat message', function (msg) {
-      window.console.log(msg);
+    socket.on('rps_play', function (play) {
+      window.console.log(play);
+      
     });
   }
+
   render() {
     var Child;
 
