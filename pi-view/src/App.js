@@ -5,14 +5,22 @@ import './css/bootstrap-3.3.7-dist/css/bootstrap.min.css';
 import './css/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css';
 import Home from './components/rps/rps.jsx';
 import About from './components/about/aboutPage.jsx';
+import io from 'socket.io-client';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    var socket = io('http://localhost:3001');
+    socket.on('chat message', function (msg) {
+      window.console.log(msg);
+    });
+  }
   render() {
     var Child;
 
-    switch(this.props.route) {
-      case 'about' : Child = About; break;
-      default : Child = Home;
+    switch (this.props.route) {
+      case 'about': Child = About; break;
+      default: Child = Home;
     }
 
     return (
