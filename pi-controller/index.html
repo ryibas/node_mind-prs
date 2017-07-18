@@ -17,22 +17,42 @@
   <body>
     <ul id="messages"></ul>
     <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
+      <button id="reset_button" type="button">Reset</button>
+      <button id="rock_button" type="button">Rock</button>
+      <button id="paper_button" type="button">Paper</button>
+      <button id="scissors_button" type="button">Scissors</button>
     </form>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
       $(function () {
         var socket = io('http://localhost:3001');
-        $('form').submit(function(){
-          socket.emit('rps_play', $('#m').val());
-          $('#m').val('');
-          return false;
-        });
-        socket.on('chat message', function(msg){
+
+        socket.on('rps_play', function(msg){
           $('#messages').append($('<li>').text(msg));
           window.scrollTo(0, document.body.scrollHeight);
         });
+
+        $('#reset_button').click(function() {
+          socket.emit('rps_reset', true);
+          return false;
+        });
+
+        $('#rock_button').click(function() {
+          socket.emit('rps_play', 'rock');
+          return false;
+        });
+
+        $('#paper_button').click(function() {
+          socket.emit('rps_play', 'paper');
+          return false;
+        })
+
+        $('#scissors_button').click(function() {
+          socket.emit('rps_play', 'scissors');
+          return false;
+        })
+
       });
     </script>
   </body>
