@@ -16,7 +16,7 @@ class App extends Component {
 
     var socket = io('http://localhost:3001');
 
-    socket.on('rps_reset', function() {
+    socket.on('rps_view_play', function() {
       window.console.log('Resetting training model...');
       trainingData = [{ input: { r: '1', p: '0', s: '0' }, output: { r: '0', p: '1', s: '0' } },
           { input: { r: '0', p: '1', s: '0' }, output: { r: '0', p: '0', s: '1' } },

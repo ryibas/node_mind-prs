@@ -10,36 +10,19 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-var plays = [];
-
 io.on('connection', function (socket) {
   socket.on('rps_play', function (play) {
     console.log('message received - ' + play);
-
-    var playElement = {};
-    
-    if (play == 'rock') {
-      playElement = { r: '1', p: '0', s: '0'};
-    } else if (play == 'paper') {
-      playElement = { r: '0', p: '1', s: '0'};      
-    } else if (play == 'scissors') {
-      playElement = { r: '0', p: '0', s: '1'};            
-    } else {
-      return;
-    }
-
-    plays.push(playElement);
 
     io.emit('rps_view_play', play);
     io.emit('rps_controller_play', play);
   });
 
   socket.on('rps_reset', function () {
+    io.emit('rps_view_play');
     console.log('resetting played array.');
-    plays = [];
   })
 });
-
 
 http.listen(port, function () {
   console.log('listening on *:' + port);
