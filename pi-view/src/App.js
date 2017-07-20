@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import './css/bootstrap-3.3.7-dist/css/bootstrap.min.css';
 import './css/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css';
 import Home from './components/rps/rps.jsx';
-import About from './components/about/aboutPage.jsx';
 import io from 'socket.io-client';
 import brain from 'brain.js';
 
@@ -25,7 +23,7 @@ class App extends Component {
           { input: { r: '0', p: '0', s: '1' }, output: { r: '1', p: '0', s: '0' } }];
     });
 
-    socket.on('rps_play', function (play) {
+    socket.on('rps_view_play', function (play) {
 
       var net = new brain.NeuralNetwork();
 
@@ -69,15 +67,13 @@ class App extends Component {
     var Child;
 
     switch (this.props.route) {
-      case 'about': Child = About; break;
+      //case 'about': Child = About; break; // Here's where we would replace Child w/ something else
       default: Child = Home;
     }
 
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
         </div>
         <Child></Child>
       </div>
