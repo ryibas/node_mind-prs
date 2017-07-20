@@ -12,21 +12,42 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    var trainingData = [{ input: { r: '1', p: '0', s: '0' }, output: { r: '0', p: '1', s: '0' } },
+    { input: { r: '0', p: '1', s: '0' }, output: { r: '0', p: '0', s: '1' } },
+    { input: { r: '0', p: '0', s: '1' }, output: { r: '1', p: '0', s: '0' } }];
+
     var socket = io('http://localhost:3001');
+
+    socket.on('rps_reset', function() {
+      window.console.log('Resetting training model...');
+      trainingData = [{ input: { r: '1', p: '0', s: '0' }, output: { r: '0', p: '1', s: '0' } },
+          { input: { r: '0', p: '1', s: '0' }, output: { r: '0', p: '0', s: '1' } },
+          { input: { r: '0', p: '0', s: '1' }, output: { r: '1', p: '0', s: '0' } }];
+    });
+
     socket.on('rps_play', function (play) {
-      window.console.log(play);
 
       var net = new brain.NeuralNetwork();
 
-      net.train([{input: { r: '0', p: '1', s: '0' }, output: { r: '0', p: '0', s: '1' }},
-           {input: { r: '0', p: '1', s: '0' }, output: { r: '0', p: '0', s: '1' }},
-           {input: { r: '0', p: '1', s: '0' }, output: { r: '0', p: '0', s: '1' }},
-           {input: { r: '0', p: '1', s: '0' }, output: { r: '0', p: '0', s: '1' }},
-           {input: { r: '0', p: '1', s: '0' }, output: { r: '0', p: '0', s: '1' }},
-           {input: { r: '0', p: '1', s: '0' }, output: { r: '0', p: '0', s: '1' }}]);            
+      var playElement = {};
 
-      var output = net.run({  r: '0', p: '1', s: '0' });
+      if (play === 'rock') {
+        playElement = { input: { r: '1', p: '0', s: '0' }, output: { r: '0', p: '1', s: '0' }};
+      } else if (play === 'paper') {
+        playElement = { input: { r: '0', p: '1', s: '0' }, output: { r: '0', p: '0', s: '1'}};
+      } else if (play === 'scissors') {
+        playElement = { input: { r: '0', p: '0', s: '1' }, output: { r: '1', p: '0', s: '0'}};
+      } else {
+        return;
+      }
 
+      trainingData.push(playElement);
+      net.train(trainingData);
+
+      var output = net.run(playElement);
+
+      window.console.log(play);
+      window.console.log(trainingData);
       window.console.log(output);
 
       if (output.r > output.p && output.r > output.s) {
@@ -34,13 +55,13 @@ class App extends Component {
       }
 
       if (output.p > output.r && output.p > output.s) {
-        window.console.log('p');        
+        window.console.log('p');
       }
 
       if (output.s > output.r && output.s > output.p) {
         window.console.log('s');
       }
-      
+
     });
   }
 

@@ -28,7 +28,7 @@
       $(function () {
         var socket = io('http://localhost:3001');
 
-        socket.on('rps_play', function(msg){
+        socket.on('rps_controller_play', function(msg){
           $('#messages').append($('<li>').text(msg));
           window.scrollTo(0, document.body.scrollHeight);
         });
