@@ -23,12 +23,12 @@ io.on('connection', function (socket) {
       io.emit('rps_controller_play', 'rock');
   });
 
-  xbox.on('Y', function () {
+  xbox.on('y', function () {
     console.log('[Y] button press');
       io.emit('rps_controller_play', 'paper');
   });
 
-  xbox.on('B', function () {
+  xbox.on('b', function () {
     console.log('[B] button press');
       io.emit('rps_controller_play', 'scissors');
   });
