@@ -18,6 +18,7 @@ var cylon = require('cylon');
 
 cylon.robot({
   connections: {
+    raspi: { adaptor: 'raspi' },
     joystick: { adaptor: 'joystick' }
   },
 
