@@ -1,64 +1,40 @@
-var cylon = require('cylon');
+var app = require('express')();
+var express = require('express');
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+var port = process.env.PORT || 3001;
+var xbox = require('xbox-controller-node');
 
-// cylon.robot({
-//   connections: {
-//     raspi: { adaptor: 'raspi' }
-//   },
+app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 
-//   devices: {
-//     button: { driver: 'button', pin: 11 }
-//   },
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/index.html');
+});
 
-//   work: function(my) {
-//      my.button.on('push', function() {
-//       console.log("Button pushed!");
-//     });
-//   }
-// }).start();
+io.on('connection', function (socket) {
 
-cylon.robot({
-  connections: {
-    raspi: { adaptor: 'raspi' },
-    joystick: { adaptor: 'joystick' }
-  },
+  xbox.on('a', function () {
+    console.log('[A] button press');
+      io.emit('rps_view_reset');
+  });
 
-  devices: {
-    controller: { driver: 'xbox-360' }
-  },
+  xbox.on('x', function () {
+    console.log('[X] button press');
+      io.emit('rps_controller_play', 'rock');
+  });
 
-  work: function(my) {
-     ["a", "b", "x", "y"].forEach(function(button) {
-      my.controller.on(button + ":press", function() {
-        console.log("Button " + button + " pressed.");
-      });
+  xbox.on('Y', function () {
+    console.log('[Y] button press');
+      io.emit('rps_controller_play', 'paper');
+  });
 
-      my.controller.on(button + ":release", function() {
-        console.log("Button " + button + " released.");
-      });
-    });
-    
-    my.controller.on("left_x:move", function(pos) {
-      console.log("Left Stick - X:", pos);
-    });
+  xbox.on('B', function () {
+    console.log('[B] button press');
+      io.emit('rps_controller_play', 'scissors');
+  });
 
-    my.controller.on("left_y:move", function(pos) {
-      console.log("Left Stick - Y:", pos);
-    });
+});
 
-    my.controller.on("right_x:move", function(pos) {
-      console.log("Right Stick - X:", pos);
-    });
-
-    my.controller.on("right_y:move", function(pos) {
-      console.log("Right Stick - Y:", pos);
-    });
-
-    my.controller.on("lt:move", function(pos) {
-      console.log("Left Trigger: ", pos);
-    });
-
-    my.controller.on("rt:move", function(pos) {
-      console.log("Right Trigger: ", pos);
-    });
-  }
-}).start();
+http.listen(port, function () {
+  console.log('listening on *:' + port);
+});
