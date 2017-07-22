@@ -13,22 +13,22 @@ app.get('/', function (req, res) {
 
 io.on('connection', function (socket) {
 
-  xbox.on('a', function () {
+  xbox.on('a:release', function () {
     console.log('[A] button press');
       io.emit('rps_view_reset');
   });
 
-  xbox.on('x', function () {
+  xbox.on('x:release', function () {
     console.log('[X] button press');
       io.emit('rps_view_play', 'rock');
   });
 
-  xbox.on('y', function () {
+  xbox.on('y:release', function () {
     console.log('[Y] button press');
       io.emit('rps_view_play', 'paper');
   });
 
-  xbox.on('b', function () {
+  xbox.on('b:release', function () {
     console.log('[B] button press');
       io.emit('rps_view_play', 'scissors');
   });
