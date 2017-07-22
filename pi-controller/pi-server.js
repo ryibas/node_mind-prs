@@ -20,17 +20,17 @@ io.on('connection', function (socket) {
 
   xbox.on('x', function () {
     console.log('[X] button press');
-      io.emit('rps_controller_play', 'rock');
+      io.emit('rps_view_play', 'rock');
   });
 
   xbox.on('y', function () {
     console.log('[Y] button press');
-      io.emit('rps_controller_play', 'paper');
+      io.emit('rps_view_play', 'paper');
   });
 
   xbox.on('b', function () {
     console.log('[B] button press');
-      io.emit('rps_controller_play', 'scissors');
+      io.emit('rps_view_play', 'scissors');
   });
 
 });
