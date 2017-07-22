@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "brain.js": "git+https://github.com/harthur-org/brain.js.git",
+    "brain.js": "0.7.0",
     "p-map": "^1.1.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.10",
-    "socket.io": "^2.0.3",
-    "brain.js": "0.7.0"
+    "recharts": "^1.0.0-alpha.2",
+    "socket.io": "^2.0.3"
   },
   "scripts": {
     "start": "react-scripts start",

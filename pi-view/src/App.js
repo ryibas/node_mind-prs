@@ -3,6 +3,7 @@ import './App.css';
 import './css/bootstrap-3.3.7-dist/css/bootstrap.min.css';
 import './css/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css';
 import Home from './components/rps/rps.jsx';
+import Chart from './components/chart/chart.jsx';
 import ResultsList from './components/resultsList/resultsList.jsx';
 import io from 'socket.io-client';
 import brain from 'brain.js';
@@ -16,17 +17,25 @@ class App extends Component {
     };
 
     var socket = io('http://localhost:3001');
+    this.totalAiWins = 0;
+    this.totalUserWins = 0;
     var self = this;
 
     var trainingData = [{ input: { r: '1', p: '0', s: '0' }, output: { r: '0', p: '1', s: '0' } },
     { input: { r: '0', p: '1', s: '0' }, output: { r: '0', p: '0', s: '1' } },
     { input: { r: '0', p: '0', s: '1' }, output: { r: '1', p: '0', s: '0' } }];
 
-    socket.on('rps_view_reset', function() {
+    socket.on('rps_view_reset', function () {
       window.console.log('Resetting training model...');
+      self.totalAiWins = 0;
+      self.totalUserWins = 0;
+      self.setState({
+        results: []
+      });
+
       trainingData = [{ input: { r: '1', p: '0', s: '0' }, output: { r: '0', p: '1', s: '0' } },
-          { input: { r: '0', p: '1', s: '0' }, output: { r: '0', p: '0', s: '1' } },
-          { input: { r: '0', p: '0', s: '1' }, output: { r: '1', p: '0', s: '0' } }];
+      { input: { r: '0', p: '1', s: '0' }, output: { r: '0', p: '0', s: '1' } },
+      { input: { r: '0', p: '0', s: '1' }, output: { r: '1', p: '0', s: '0' } }];
     });
 
     socket.on('rps_view_play', function (userPlay) {
@@ -36,11 +45,11 @@ class App extends Component {
       var playElement = {};
 
       if (userPlay === 'rock') {
-        playElement = { input: { r: '1', p: '0', s: '0' }, output: { r: '0', p: '1', s: '0' }};
+        playElement = { input: { r: '1', p: '0', s: '0' }, output: { r: '0', p: '1', s: '0' } };
       } else if (userPlay === 'paper') {
-        playElement = { input: { r: '0', p: '1', s: '0' }, output: { r: '0', p: '0', s: '1'}};
+        playElement = { input: { r: '0', p: '1', s: '0' }, output: { r: '0', p: '0', s: '1' } };
       } else if (userPlay === 'scissors') {
-        playElement = { input: { r: '0', p: '0', s: '1' }, output: { r: '1', p: '0', s: '0'}};
+        playElement = { input: { r: '0', p: '0', s: '1' }, output: { r: '1', p: '0', s: '0' } };
       } else {
         return;
       }
@@ -71,12 +80,41 @@ class App extends Component {
         window.console.log('s');
       }
 
+      // Determine who won
+      var aiWon = false;
+      var userWon = false;
+
+      if ((userPlay === 'rock' && aiPlay === 'paper') ||
+        (userPlay === 'paper' && aiPlay === 'scissors') ||
+        (userPlay === 'scissors' && aiPlay === 'rock')) {
+        aiWon = true;
+        userWon = false;
+        self.totalAiWins++;
+        window.console.log('ai won');
+        window.console.log(self.totalAiWins);
+      }
+
+      if ((aiPlay === 'rock' && userPlay === 'paper') ||
+        (aiPlay === 'paper' && userPlay === 'scissors') ||
+        (aiPlay === 'scissors' && userPlay === 'rock')) {
+        aiWon = false;
+        userWon = true;
+        self.totalUserWins++;
+        window.console.log('user won');
+        window.console.log(self.totalAiWins);
+      }
+
       var result = {
+        playId: self.state.results.length + 1,
         userPlay: userPlay,
-        aiPlay: aiPlay
+        aiPlay: aiPlay,
+        aiWon: aiWon,
+        userWon: userWon,
+        totalAiWins: self.totalAiWins,
+        totalUserWins: self.totalUserWins
       };
 
-      self.setState({ 
+      self.setState({
         results: self.state.results.concat([result])
       });
 
@@ -96,6 +134,7 @@ class App extends Component {
         <div className="App-header">
         </div>
         <Child></Child>
+        <Chart results={this.state.results}></Chart>
         <ResultsList results={this.state.results}></ResultsList>
       </div>
     );
