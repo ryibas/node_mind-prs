@@ -20,7 +20,7 @@ io.on('connection', function (socket) {
   });
 
   socket.on('rps_reset', function () {
-    io.emit('rps_view_play');
+    io.emit('rps_view_reset');
     console.log('resetting played array.');
   })
 });
