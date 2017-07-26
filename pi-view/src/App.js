@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import './css/bootstrap-3.3.7-dist/css/bootstrap.min.css';
 import './css/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css';
-import Home from './components/rps/rps.jsx';
 import Chart from './components/chart/chart.jsx';
 import ResultsList from './components/resultsList/resultsList.jsx';
 import io from 'socket.io-client';
@@ -122,18 +121,8 @@ class App extends Component {
   }
 
   render() {
-    var Child;
-
-    switch (this.props.route) {
-      //case 'about': Child = About; break; // Here's where we would replace Child w/ something else
-      default: Child = Home;
-    }
-
     return (
       <div className="App">
-        <div className="App-header">
-        </div>
-        <Child></Child>
         <Chart results={this.state.results}></Chart>
         <ResultsList results={this.state.results}></ResultsList>
       </div>
