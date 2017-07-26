@@ -1,4 +1,5 @@
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import './resultsList.css';
 import React from 'react'
 
 class ResultsList extends React.Component {
@@ -13,7 +14,7 @@ class ResultsList extends React.Component {
 
   render() {
       return (
-        <div>
+        <div className="ResultsList">
           <BootstrapTable data={this.props.results} options={this.options}>
             <TableHeaderColumn dataField='key' isKey dataSort>Play #</TableHeaderColumn>
             <TableHeaderColumn dataField='userPlay' dataSort>User Played</TableHeaderColumn>
