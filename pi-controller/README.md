@@ -1,13 +1,8 @@
-# chat-example
+# pi-controller
 
-This is the source code for a very simple chat example used for
-the [Getting Started](http://socket.io/get-started/chat/) guide
-of the Socket.IO website.
+This is the node process that listens for XBox 360 controller events. It then takes these events and then using socket.io emits them on localhost:3001.
 
-Please refer to it to learn how to run this application.
+There are two JavaScript files that are used.
 
-You can also spin up a free Heroku dyno to test it out:
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/socketio/chat-example)
-
-Besides, the application is deployed on [Now](https://zeit.co/now): https://socketio-chat-example.now.sh/
+1. test-wrapper.js
+2. index.js - The 
