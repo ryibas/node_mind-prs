@@ -1,24 +1,27 @@
-import React, { Component } from 'react'
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import React from 'react'
 
 class ResultsList extends React.Component {
-  render() {
-    var rows = [];
-    this.props.results.forEach(function(result) {
-        rows.push(<tr><td>{result.userPlay}</td><td>{result.aiPlay}</td></tr>);
-    });
-    return (
-      <table>
-        <thead>
-          <tr>
-            <th>Player Play</th>
-            <th>AI Play</th>
-            <th>Who Won?</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </table>
-    );
-  }
-}
+  constructor(props) {
+    super(props);
 
-export default ResultsList;
+    this.options = {
+      defaultSortName: 'key',  // default sort column name
+      defaultSortOrder: 'desc'  // default sort order
+    };
+  }
+
+  render() {
+      return (
+        <div>
+          <BootstrapTable data={this.props.results} options={this.options}>
+            <TableHeaderColumn dataField='key' isKey dataSort>Play #</TableHeaderColumn>
+            <TableHeaderColumn dataField='userPlay' dataSort>User Played</TableHeaderColumn>
+            <TableHeaderColumn dataField='aiPlay'>AI Played</TableHeaderColumn>
+          </BootstrapTable>
+        </div>
+      );
+    }
+  }
+
+  export default ResultsList;

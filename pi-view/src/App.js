@@ -58,10 +58,6 @@ class App extends Component {
 
       var output = net.run(playElement);
 
-      window.console.log(userPlay);
-      window.console.log(trainingData);
-      window.console.log(output);
-
       var aiPlay = '';
 
       if (output.r > output.p && output.r > output.s) {
